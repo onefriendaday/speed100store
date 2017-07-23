@@ -1,0 +1,16 @@
+.product-list {
+  @include container;
+}
+
+.product-list__img {
+  width: 100%;
+  height: auto;
+}
+
+.product-list__price {
+  text-align: right;
+}
+
+.product-list__details {
+  padding: 20px;
+}

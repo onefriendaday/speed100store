@@ -1,0 +1,31 @@
+@mixin row {
+  max-width: 75rem;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+@mixin container {
+  max-width: 75rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin col {
+  padding-left: 5px;
+  padding-right: 5px;
+  min-width: 0;
+}
+
+@mixin link {
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  transition: opacity .15s ease;
+  transition: border .15s ease;
+
+  &:hover {
+    opacity: 0.7;
+    border-bottom: 1px solid transparent;
+  }
+}

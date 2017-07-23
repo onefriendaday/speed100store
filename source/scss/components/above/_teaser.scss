@@ -1,0 +1,38 @@
+.teaser {
+  @include container;
+}
+
+.teaser__inner {
+  align-items: center;
+}
+
+.teaser__col {
+
+}
+
+.teaser__text {
+  h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2rem;
+
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+  }
+}
+
+.teaser__img {
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.teaser__link {
+  @include link;
+
+  display: inline-block;
+  margin-top: 20px;
+}

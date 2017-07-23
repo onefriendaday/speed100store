@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Site - {{ story.name }}</title>
+  <link rel="manifest" href="/manifest.json?1">
+  <link rel="icon" type="image/png" href="{{ '//a.storyblok.com/f/40201/c55e612713/500x500_front_blue_transparent.png' | resize: '192x192' }}" sizes="192x192">
+  <meta name="theme-color" content="#ffffff">
+
+  {% if proxy_mode %}
+    <link href="{{ 'assets/css/above.css' | asset_url }}" rel="stylesheet">
+  {% else %}
+    <style>{%- include 'above_fold_css' -%}</style>
+  {% endif %}
+
+  <link rel="preload" id="stylesheet" href="{{ 'assets/css/below.css' | asset_url }}" as="style" onload="this.rel='stylesheet'">
+</head>
+<body>
+  {% include 'icon' %}
+
+  <header class="header">
+    <div class="u__show--m">
+      <a href="#" class="header__icon menu">
+        <svg class="icon"><use xlink:href="#icon-navi"></use></svg>
+      </a>
+    </div>
+    <nav class="header__col u__hide--m" role="navigation">
+      <ul class="nav">
+        <li>
+          <a class="nav__item" href="#">Test</a>
+        </li>
+        <li>
+          <a class="nav__item" href="#">Test</a>
+        </li>
+        <li>
+          <a class="nav__item" href="#">Test</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="header__col header__logo">Logo</div>
+    <nav class="header__col header__second-navi u__hide--m">
+      <ul class="nav">
+        <li>
+          <a class="nav__item" href="#">Test</a>
+        </li>
+        <li>
+          <a class="nav__item" href="#">Test</a>
+        </li>
+        <li>
+          <a class="nav__item" href="#">Test</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="u__show--m">
+      <a href="#" class="header__icon">
+        <svg class="icon"><use xlink:href="#icon-cart"></use></svg>
+      </a>
+    </div>
+  </header>
+
+  <main id="main" role="main">
+    <div class="teaser mdc-layout-grid">
+      <section class="teaser__inner mdc-layout-grid__inner">
+        <div class="teaser__img mdc-layout-grid__cell mdc-layout-grid__cell--span-8-desktop mdc-layout-grid__cell--span-4-tablet">
+          <a href="#">
+            <img alt="" src="//cdn.shopify.com/s/files/1/0948/5818/t/65/assets/Carousel-FindYourFitSS_770x.jpg" />
+          </a>
+        </div>
+        <div class="teaser__text mdc-layout-grid__cell mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet">
+          <h1>
+            <a href="#">Sizes Based On Body Types</a>
+          </h1>
+          <p>Sizes Based On Body Types</p>
+          <a class="teaser__link" href="#">Link</a>
+        </div>
+      </section>
+    </div>
+
+    <div class="product-list mdc-layout-grid">
+      <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell">
+          <figure>
+            <a href="#">
+              <img class="product-list__img" alt="" src="//cdn.shopify.com/s/files/1/0948/5818/products/10052016-Blazer-2_370x370_crop_top.jpg?v=1500073296">
+            </a>
+          </figure>
+          <div class="product-list__details">
+            <div class="mdc-layout-grid__inner">
+              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+                Lefant
+              </div>
+              <div class="product-list__price mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+                Lefant fdsa fdsa fdsa fdsa
+              </div>
+            </div>
+            <div class="product-list__muted-text">
+              Subheadline
+            </div>
+            <a class="product-list__link" href="#">Link to detail</a>
+          </div>
+        </div>
+        <div class="mdc-layout-grid__cell">
+          <figure>
+            <a href="#">
+              <img class="product-list__img" alt="" src="//cdn.shopify.com/s/files/1/0948/5818/products/10052016-Blazer-2_370x370_crop_top.jpg?v=1500073296">
+            </a>
+          </figure>
+          <div class="product-list__details">
+            <div class="mdc-layout-grid__inner">
+              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+                Lefant
+              </div>
+              <div class="product-list__price mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+                Lefant fdsa fdsa fdsa fdsa
+              </div>
+            </div>
+            <div class="product-list__muted-text">
+              Subheadline
+            </div>
+            <a class="product-list__link" href="#">Link to detail</a>
+          </div>
+        </div>
+        <div class="mdc-layout-grid__cell">
+          <figure>
+            <a href="#">
+              <img class="product-list__img" alt="" src="//cdn.shopify.com/s/files/1/0948/5818/products/10052016-Blazer-2_370x370_crop_top.jpg?v=1500073296">
+            </a>
+          </figure>
+          <div class="product-list__details">
+            <div class="mdc-layout-grid__inner">
+              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+                Lefant
+              </div>
+              <div class="product-list__price mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+                Lefant fdsa fdsa fdsa fdsa
+              </div>
+            </div>
+            <div class="product-list__muted-text">
+              Subheadline
+            </div>
+            <a class="product-list__link" href="#">Link to detail</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include story.content.component with blok: story.content, title: story.name, date: story.created_at %}
+  </main>
+
+  <aside class="mdc-temporary-drawer mdc-typography">
+    <nav class="mdc-temporary-drawer__drawer">
+      <nav id="icon-with-text-demo" class="mdc-temporary-drawer__content mdc-list">
+        <a class="mdc-list-item mdc-temporary-drawer--selected" href="#">
+          <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">inbox</i>Inbox
+        </a>
+        <a class="mdc-list-item" href="#">
+          <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">star</i>Star
+        </a>
+      </nav>
+    </nav>
+  </aside>
+
+  <script type="text/javascript" src="{{ 'assets/js/scripts.js' | asset_url }}"></script>
+
+  {% if story.content._editable %}
+    <script type="text/javascript" src="//app.storyblok.com/storyblok-latest.js"></script>
+    <script type="text/javascript">
+
+      storyblok.init({
+        accessToken: '{{ public_token }}'
+      });
+
+      storyblok.on('change', function() {
+        location.reload(true);
+      });
+
+      storyblok.pingEditor(function() {
+        if (storyblok.inEditor) {
+          storyblok.enterEditmode();
+        }
+      });
+
+    </script>
+  {% endif %}
+
+  <script>
+  /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+  !function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
+
+  /*! loadCSS rel=preload polyfill. [c]2017 Filament Group, Inc. MIT License */
+  !function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
+  </script>
+  <script src="{{ 'assets/js/vendor/up.js' | asset_url }}"></script>
+  <script>
+    UpUp.debug(true);
+    UpUp.start({
+      'content': '<html><body><h1>You are offline now</h1><p>Content for offline</p></body></html>',
+      'service-worker-url': '/service-worker.js?v'
+    });
+  </script>
+</body>
+</html>

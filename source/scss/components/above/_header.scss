@@ -1,0 +1,27 @@
+.header {
+  max-width: 75rem;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+.header__col {
+  @include col;
+}
+
+.header__logo {
+  text-align: center;
+}
+
+.header__second-navi {
+  text-align: right;
+}
+
+.header__icon {
+  color: #000;
+  font-size: 1.2rem;
+}
