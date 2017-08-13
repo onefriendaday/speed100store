@@ -49,6 +49,7 @@ export default {
         })
         .catch((error) => {
           console.log(error)
+          State.errors = error.response.data
         })
     },
 
@@ -61,6 +62,7 @@ export default {
         })
         .catch((error) => {
           console.log(error)
+          State.errors = error.response.data
         })
     }
   }

@@ -1,0 +1,8 @@
+<div class="errors" :class="{'errors--open': hasErrors}">
+  <div class="errors__inner">
+    <div v-for="(item, key) in errors">
+      <strong>Validation of {{ key }} failed</strong>: <span v-for="error in item">{{ error }}</span>
+    </div>
+    <a href="#" @click.prevent="close">Close</a>
+  </div>
+</div>

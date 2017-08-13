@@ -6,7 +6,8 @@ let state = new Vue({
   data: function() {
     return {
       checkout: {},
-      checkoutStatus: 'open'
+      checkoutStatus: 'open',
+      errors: {}
     }
   }
 })

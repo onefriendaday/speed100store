@@ -21,6 +21,7 @@ import Catalogue from './components/Catalogue'
 import Checkout from './components/Checkout'
 import Minicart from './components/Minicart'
 import Cart from './components/Cart'
+import Errors from './components/Errors'
 import BuyButton from './components/BuyButton'
 
 const vues = {
@@ -28,6 +29,7 @@ const vues = {
   Checkout,
   Minicart,
   Cart,
+  Errors,
   BuyButton,
   Catalogue
 }

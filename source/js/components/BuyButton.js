@@ -36,7 +36,7 @@ export default {
           })
           .catch((error) => {
             this.loading = false
-            console.log(error)
+            State.errors = error.response.data
           })
       }
     },
@@ -56,7 +56,7 @@ export default {
 
       let orderItem = {
         sku: sku,
-        url: window.location.href,
+        url: window.location.href.indexOf('localhost:') > -1 ? window.location.href.replace('localhost:4440', '0387bdac.me.storyblok.com') : window.location.href,
         value: value,
         quantity: 1,
         meta_data: meta_data
@@ -67,9 +67,9 @@ export default {
           State.checkout = res.data.checkout
           window.location.href = '/cart'
         })
-        .catch((error) => {
+        .catch((error, res) => {
           this.loading = false
-          console.log(error)
+          State.errors = error.response.data
         })
     }
   }
