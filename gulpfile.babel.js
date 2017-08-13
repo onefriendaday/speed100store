@@ -92,7 +92,6 @@ gulp.task('browsersync', function () {
   gulp.watch('source/js/vendor/*.js', ['vendor:scripts'])
   gulp.watch('views/assets/js/**/*.js', function(event) {
     browserSync.reload()
-    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   })
 })
 

@@ -1,5 +1,5 @@
 {{ blok._editable }}
-<div class="uk-width-1-2">
+<div class="uk-width-{{ blok.width }}@m">
   {% for item in blok.body %}
     {% include item.component with blok: item %}
   {% endfor %}

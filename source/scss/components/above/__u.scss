@@ -336,6 +336,11 @@ body:hover .u__vis-hidden button {
   visibility: hidden !important;
 }
 
+.u__visible {
+  display: block !important;
+  visibility: visible !important;
+}
+
 
 @media (max-width: $breakpoint-small-max) {
   .u__mobile-no-padd {

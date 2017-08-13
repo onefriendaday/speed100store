@@ -7,7 +7,7 @@
       <ul v-if="res" class="u__unstyled-li">
         <li class="catalogue__filter-item" v-for="(aggr, key) in res.aggregations">
           <div class="form__select" v-if="aggr.buckets">
-            <span class="u__hidden" :class="{'u__hidden': !selection[key]}">{{ selection[key] }} <span class="form__x" @click="unselect(key)">x</span></span>
+            <span class="u__hidden" :class="{'u__visible': selection[key]}">{{ selection[key] }} <span class="form__x" @click="unselect(key)">x</span></span>
             <span :class="{'u__hidden': selection[key]}">Select <span v-text="key"></span> +</span>
             <select v-model="selection[key]">
               <option :value="undefined"></option>
@@ -22,12 +22,17 @@
   </filter-bar>
 
   <product-list :res="res" inline-template>
-    <div>
-      <div v-if="res" class="uk-grid">
-        <div v-for="p in res.hits.hits" class="uk-width-1-2@s uk-width-1-3@m">
+    <div class="u__hidden" :class="{'u__visible': res}">
+      <div class="uk-grid" v-if="res">
+        <div :key="p._id" v-for="p in res.hits.hits" class="uk-width-1-2@s uk-width-1-3@m">
           <figure>
             <a :href="p._source.url">
-              <img class="product-list__img" alt="" :src="p._source.image | resize('372x0')">
+              <img
+                data-sizes="auto"
+                :data-src="p._source.image | resize('372x372')"
+                class="product-list__img lazyload u__cany"
+                alt="" />
+              <canvas class="u__cany-can" width="372" height="372"></canvas>
             </a>
           </figure>
           <div class="product-list__details">
@@ -36,13 +41,13 @@
                 {{ p._source.name }}
               </div>
               <div class="product-list__price uk-width-1-1 uk-width-1-2">
-                $ {{ p._source.price }}
+                {{ p._source.price | currency }}
               </div>
             </div>
             <div class="product-list__muted-text">
               {{ p._source.sku }}
             </div>
-            <a class="product-list__link" :href="p._source.url">Link to detail</a>
+            <a class="product-list__link link" :href="p._source.url">Detail</a>
           </div>
         </div>
       </div>

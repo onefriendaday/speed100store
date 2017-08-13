@@ -3,7 +3,7 @@
   <h4 class="u__center product-list__header">Feature products</h4>
 
   <div class="uk-grid">
-    {% set products from stories starts_with:'products' %}
+    {% set products from stories starts_with:'products', per_page:'3' %}
     {% for product in products.data %}
       <div class="uk-width-1-2@s uk-width-1-3@m">
         <figure>

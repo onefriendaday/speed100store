@@ -91,7 +91,7 @@
 
   <footer class="footer">
     <div class="footer__wrap u__sperator">
-      <div class="uk-grid uk-width-2-3@m newsletter">
+      <div class="uk-grid uk-width-1-2@m newsletter">
         <div class="uk-width-1-3@m">
           <h6>Sign Up for Emails</h6>
           <p>Mostly good stuff, <br>promise.</p>
@@ -111,39 +111,17 @@
       </div>
 
       <div class="footer__contact">
-        <div class="uk-grid">
-          <div class="uk-width-1-4@m">
-            menu
-          </div>
-          <div class="uk-width-1-4@m">
-            menu
-          </div>
-          <div class="uk-width-1-4@m">
-            menu
-          </div>
-          <div class="uk-width-1-4@m">
-            menu
-          </div>
-        </div>
+        {% for item in global.content.top_footer %}
+          {% include item.component with blok: item %}
+        {% endfor %}
       </div>
     </div>
 
     <div class="footer__nav">
       <div class="footer__wrap">
-        <div class="uk-grid">
-          <div class="uk-width-1-4@m">
-            menu
-          </div>
-          <div class="uk-width-1-4@m">
-            menu
-          </div>
-          <div class="uk-width-1-4@m">
-            menu
-          </div>
-          <div class="uk-width-1-4@m">
-            menu
-          </div>
-        </div>
+        {% for item in global.content.bottom_footer %}
+          {% include item.component with blok: item %}
+        {% endfor %}
       </div>
     </div>
   </footer>
