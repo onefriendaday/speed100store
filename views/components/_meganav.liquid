@@ -1,0 +1,12 @@
+<div class="meganav">
+  <div class="uk-grid">
+    <div class="uk-width-1-2"></div>
+    <div class="uk-width-1-2">
+      {% set global from story id:'settings' %}
+      {% assign id = params.id | floor %}
+      {% for item in global.content.left_navi[id].content_area %}
+        {% include item.component with blok: item %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

@@ -10,6 +10,9 @@
   max-width: 75rem;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
 }
 
 @mixin col {

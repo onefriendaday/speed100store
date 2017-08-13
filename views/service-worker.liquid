@@ -1,7 +1,41 @@
-//! UpUp Service Worker
-//! version : 0.3.0
-//! author  : Tal Ater @TalAter
-//! license : MIT
-//! https://github.com/TalAter/UpUp
-var _CACHE_NAME_PREFIX="upup-cache",_calculateHash=function(a){a=a.toString();var b,c,d=0,e=a.length;if(0===e)return d;for(b=0;b<e;b++)c=a.charCodeAt(b),d=(d<<5)-d+c,d|=0;return d};self.addEventListener("message",function(a){"set-settings"===a.data.action&&_parseSettingsAndCache(a.data.settings)}),self.addEventListener("fetch",function(a){a.respondWith(fetch(a.request).catch(function(){return caches.match(a.request).then(function(b){return b||("navigate"===a.request.mode||"GET"===a.request.method&&a.request.headers.get("accept").includes("text/html")?caches.match("sw-offline-content"):void 0)})}))});var _parseSettingsAndCache=function(a){var b=_CACHE_NAME_PREFIX+"-"+(a["cache-version"]?a["cache-version"]+"-":"")+_calculateHash(a.content+a["content-url"]+a.assets);return caches.open(b).then(function(b){return a.assets&&b.addAll(a.assets.map(function(a){return new Request(a,{mode:"no-cors"})})),a["content-url"]?fetch(a["content-url"],{mode:"no-cors"}).then(function(a){return b.put("sw-offline-content",a)}):a.content?b.put("sw-offline-content",_buildResponse(a.content)):b.put("sw-offline-content",_buildResponse("You are offline"))}).then(function(){return caches.keys().then(function(a){return Promise.all(a.map(function(a){if(a.startsWith(_CACHE_NAME_PREFIX)&&b!==a)return caches.delete(a)}))})})},_buildResponse=function(a){return new Response(a,{headers:{"Content-Type":"text/html"}})};
-//# sourceMappingURL=upup.sw.min.js.map
+(global => {
+  'use strict';
+
+  // Load the sw-tookbox library.
+  importScripts('https://a.storyblok.com/t/40810/assets/js/vendor/sw-toolbox.js');
+
+  // Turn on debug logging, visible in the Developer Tools' console.
+  // global.toolbox.options.debug = true;
+
+  // The route for any requests from the googleapis origin
+  toolbox.router.get('/(.*)', global.toolbox.cacheFirst, {
+    cache: {
+      name: 'googleapis',
+      maxEntries: 10,
+      maxAgeSeconds: 86400 // cache for a day
+    },
+    origin: /\.googleapis\.com$/,
+    // Set a timeout threshold of 2 seconds
+    networkTimeoutSeconds: 2
+  });
+
+  // The route for any requests from the storyblok origin
+  toolbox.router.get('/(.*)', global.toolbox.cacheFirst, {
+    cache: {
+      name: 'storyblok-assets',
+      maxEntries: 10,
+      maxAgeSeconds: 86400 // cache for a day
+    },
+    origin: /a\.storyblok\.com$/,
+    // Set a timeout threshold of 2 seconds
+    networkTimeoutSeconds: 2
+  });
+
+  // By default, all requests that don't match our custom handler will use the toolbox.networkFirst
+  // cache strategy, and their responses will be stored in the default cache.
+  global.toolbox.router.default = global.toolbox.networkFirst;
+
+  // Boilerplate to ensure our service worker takes control of the page as soon as possible.
+  global.addEventListener('install', event => event.waitUntil(global.skipWaiting()));
+  global.addEventListener('activate', event => event.waitUntil(global.clients.claim()));
+})(self);

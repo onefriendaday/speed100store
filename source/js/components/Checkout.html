@@ -1,0 +1,6 @@
+<div>
+  <button class="button button--large" @click.prevent="buy">
+    <span v-if="loading">Loading ...</span>
+    <span v-if="!loading">Checkout</span>
+  </button>
+</div>

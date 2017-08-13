@@ -15,8 +15,23 @@
   {% endif %}
 
   <link rel="preload" id="stylesheet" href="{{ 'assets/css/below.css' | asset_url }}" as="style" onload="this.rel='stylesheet'">
+
+  <script>
+    (function() {
+      if (sessionStorage.fonts) {
+        var link = document.createElement('link')
+        link.href = 'https://fonts.googleapis.com/css?family=Zilla+Slab:400,700'
+        link.rel = 'stylesheet'
+        link.media = 'all'
+        document.getElementsByTagName('head')[0].appendChild(link)
+        document.getElementsByTagName('html')[0].className += ' scrolled wf-active'
+      }
+    })();
+  </script>
 </head>
 <body>
+  {% set global from story id:'settings' %}
+
   {% include 'icon' %}
 
   <header class="header">
@@ -25,128 +40,113 @@
         <svg class="icon"><use xlink:href="#icon-navi"></use></svg>
       </a>
     </div>
-    <nav class="header__col u__hide--m" role="navigation">
+    <a href="/" class="header__col header__logo">
+      {% if global.content.logo_svg != blank %}
+        {{ global.content.logo_svg }}
+      {% else %}
+        <img width="100" src="{{ global.content.logo }}" />
+      {% endif %}
+    </a>
+    <nav class="header__col u__hide--m" role="navigation" data-vue="Navigation">
       <ul class="nav">
-        <li>
-          <a class="nav__item" href="#">Test</a>
+        {% for navitem in global.content.left_navi %}
+        <nav-item name="{{ forloop.index0 }}" @tab-click="handleClick" inline-template>
+        <li{% if navitem.subnavi != blank %} @mouseenter="doClick"{% endif %}>
+          <a class="nav__item" href="{{ navitem.link | url }}">{{ navitem.name }}</a>
+          {% if navitem.subnavi != blank %}
+            <ul class="subnav u__unstyled-li" :class="{'subnav--open': subnavVisible}">
+              {% for subnavitem in navitem.subnavi %}
+                <li><a href="{{ subnavitem.link | url }}">{{ subnavitem.name }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
         </li>
-        <li>
-          <a class="nav__item" href="#">Test</a>
-        </li>
-        <li>
-          <a class="nav__item" href="#">Test</a>
-        </li>
+        </nav-item>
+        {% endfor %}
       </ul>
     </nav>
-    <div class="header__col header__logo">Logo</div>
     <nav class="header__col header__second-navi u__hide--m">
       <ul class="nav">
         <li>
-          <a class="nav__item" href="#">Test</a>
-        </li>
-        <li>
-          <a class="nav__item" href="#">Test</a>
-        </li>
-        <li>
-          <a class="nav__item" href="#">Test</a>
+          <a class="nav__item" href="/cart">
+            Cart (<span data-vue="Minicart">0</span>)
+          </a>
         </li>
       </ul>
     </nav>
     <div class="u__show--m">
-      <a href="#" class="header__icon">
+      <a href="/cart" class="header__icon">
         <svg class="icon"><use xlink:href="#icon-cart"></use></svg>
       </a>
     </div>
   </header>
 
-  <main id="main" role="main">
-    <div class="teaser mdc-layout-grid">
-      <section class="teaser__inner mdc-layout-grid__inner">
-        <div class="teaser__img mdc-layout-grid__cell mdc-layout-grid__cell--span-8-desktop mdc-layout-grid__cell--span-4-tablet">
-          <a href="#">
-            <img alt="" src="//cdn.shopify.com/s/files/1/0948/5818/t/65/assets/Carousel-FindYourFitSS_770x.jpg" />
-          </a>
-        </div>
-        <div class="teaser__text mdc-layout-grid__cell mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet">
-          <h1>
-            <a href="#">Sizes Based On Body Types</a>
-          </h1>
-          <p>Sizes Based On Body Types</p>
-          <a class="teaser__link" href="#">Link</a>
-        </div>
-      </section>
-    </div>
+  <div class="subnav__container"></div>
 
-    <div class="product-list mdc-layout-grid">
-      <div class="mdc-layout-grid__inner">
-        <div class="mdc-layout-grid__cell">
-          <figure>
-            <a href="#">
-              <img class="product-list__img" alt="" src="//cdn.shopify.com/s/files/1/0948/5818/products/10052016-Blazer-2_370x370_crop_top.jpg?v=1500073296">
-            </a>
-          </figure>
-          <div class="product-list__details">
-            <div class="mdc-layout-grid__inner">
-              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
-                Lefant
-              </div>
-              <div class="product-list__price mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
-                Lefant fdsa fdsa fdsa fdsa
-              </div>
-            </div>
-            <div class="product-list__muted-text">
-              Subheadline
-            </div>
-            <a class="product-list__link" href="#">Link to detail</a>
-          </div>
+  <main id="main" role="main">
+    {% include story.content.component with blok: story.content, title: story.name, date: story.created_at %}
+  </main>
+
+  <div class="spacer spacer--xlarge"></div>
+
+  <footer class="footer">
+    <div class="footer__wrap u__sperator">
+      <div class="uk-grid uk-width-2-3@m newsletter">
+        <div class="uk-width-1-3@m">
+          <h6>Sign Up for Emails</h6>
+          <p>Mostly good stuff, <br>promise.</p>
         </div>
-        <div class="mdc-layout-grid__cell">
-          <figure>
-            <a href="#">
-              <img class="product-list__img" alt="" src="//cdn.shopify.com/s/files/1/0948/5818/products/10052016-Blazer-2_370x370_crop_top.jpg?v=1500073296">
-            </a>
-          </figure>
-          <div class="product-list__details">
-            <div class="mdc-layout-grid__inner">
-              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
-                Lefant
-              </div>
-              <div class="product-list__price mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
-                Lefant fdsa fdsa fdsa fdsa
-              </div>
+        <div class="uk-width-2-3@m">
+          <form id="footer-mailing-list" class="mailing-list u__flex" method="get" name="mc-embedded-subscribe-form" target="_blank" novalidate="">
+            <label for="newsletter-input" class="u__vis-hidden">Email</label>
+            <input id="newsletter-input" class="mailing-list-email u__flex-input" name="EMAIL" type="email" placeholder="handsome-guy@email.com" value="">
+            <button class="button u__flex-col" type="submit" name="subscribe">OK</button>
+            <div class="mc-field-group" style="display: none;">
+              <input id="mce-ORIGIN" name="ORIGIN" type="hidden" value="Footer">
+
             </div>
-            <div class="product-list__muted-text">
-              Subheadline
-            </div>
-            <a class="product-list__link" href="#">Link to detail</a>
-          </div>
+          </form>
+          <p class="form-response"></p>
         </div>
-        <div class="mdc-layout-grid__cell">
-          <figure>
-            <a href="#">
-              <img class="product-list__img" alt="" src="//cdn.shopify.com/s/files/1/0948/5818/products/10052016-Blazer-2_370x370_crop_top.jpg?v=1500073296">
-            </a>
-          </figure>
-          <div class="product-list__details">
-            <div class="mdc-layout-grid__inner">
-              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
-                Lefant
-              </div>
-              <div class="product-list__price mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
-                Lefant fdsa fdsa fdsa fdsa
-              </div>
-            </div>
-            <div class="product-list__muted-text">
-              Subheadline
-            </div>
-            <a class="product-list__link" href="#">Link to detail</a>
+      </div>
+
+      <div class="footer__contact">
+        <div class="uk-grid">
+          <div class="uk-width-1-4@m">
+            menu
+          </div>
+          <div class="uk-width-1-4@m">
+            menu
+          </div>
+          <div class="uk-width-1-4@m">
+            menu
+          </div>
+          <div class="uk-width-1-4@m">
+            menu
           </div>
         </div>
       </div>
     </div>
 
-    {% include story.content.component with blok: story.content, title: story.name, date: story.created_at %}
-  </main>
+    <div class="footer__nav">
+      <div class="footer__wrap">
+        <div class="uk-grid">
+          <div class="uk-width-1-4@m">
+            menu
+          </div>
+          <div class="uk-width-1-4@m">
+            menu
+          </div>
+          <div class="uk-width-1-4@m">
+            menu
+          </div>
+          <div class="uk-width-1-4@m">
+            menu
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <aside class="mdc-temporary-drawer mdc-typography">
     <nav class="mdc-temporary-drawer__drawer">
@@ -161,11 +161,36 @@
     </nav>
   </aside>
 
-  <script type="text/javascript" src="{{ 'assets/js/scripts.js' | asset_url }}"></script>
+  <script>
+    var CheckoutToken = '{{ apps.commerce.token }}'
+  </script>
+  <script src="{{ 'assets/js/scripts.js' | asset_url }}" async></script>
+  <script>
+    /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+    !function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
+    /*! loadCSS rel=preload polyfill. [c]2017 Filament Group, Inc. MIT License */
+    !function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
+
+    WebFontConfig = {
+      google: {
+        families: ['Zilla Slab:400,700']
+      },
+      active: function() {
+        sessionStorage.fonts = true;
+      }
+    };
+
+    (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
+      wf.async = true;
+      s.parentNode.insertBefore(wf, s);
+     })(document);
+  </script>
 
   {% if story.content._editable %}
-    <script type="text/javascript" src="//app.storyblok.com/storyblok-latest.js"></script>
-    <script type="text/javascript">
+    <script src="//app.storyblok.com/f/storyblok-latest.js"></script>
+    <script>
 
       storyblok.init({
         accessToken: '{{ public_token }}'
@@ -182,22 +207,8 @@
       });
 
     </script>
+  {% else %}
+    <script src="{{ 'assets/js/vendor/sw-companion.js' | asset_url }}" data-service-worker="/service-worker.js?9" async></script>
   {% endif %}
-
-  <script>
-  /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-  !function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
-
-  /*! loadCSS rel=preload polyfill. [c]2017 Filament Group, Inc. MIT License */
-  !function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
-  </script>
-  <script src="{{ 'assets/js/vendor/up.js' | asset_url }}"></script>
-  <script>
-    UpUp.debug(true);
-    UpUp.start({
-      'content': '<html><body><h1>You are offline now</h1><p>Content for offline</p></body></html>',
-      'service-worker-url': '/service-worker.js?v'
-    });
-  </script>
 </body>
 </html>

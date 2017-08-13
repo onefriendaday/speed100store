@@ -1,0 +1,52 @@
+{{ blok._editable }}
+{% raw %}
+<section class="catalogue" data-vue="Catalogue">
+  <filter-bar :res="res" @filter-changed="doFilter" class="catalogue__filter" inline-template>
+    <div>
+      <h4>Filters</h4>
+      <ul v-if="res" class="u__unstyled-li">
+        <li class="catalogue__filter-item" v-for="(aggr, key) in res.aggregations">
+          <div class="form__select" v-if="aggr.buckets">
+            <span class="u__hidden" :class="{'u__hidden': !selection[key]}">{{ selection[key] }} <span class="form__x" @click="unselect(key)">x</span></span>
+            <span :class="{'u__hidden': selection[key]}">Select <span v-text="key"></span> +</span>
+            <select v-model="selection[key]">
+              <option :value="undefined"></option>
+              <option v-for="filter in aggr.buckets" :value="filter.key">
+                {{ filter.key }}
+              </option>
+            </select>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </filter-bar>
+
+  <product-list :res="res" inline-template>
+    <div>
+      <div v-if="res" class="uk-grid">
+        <div v-for="p in res.hits.hits" class="uk-width-1-2@s uk-width-1-3@m">
+          <figure>
+            <a :href="p._source.url">
+              <img class="product-list__img" alt="" :src="p._source.image | resize('372x0')">
+            </a>
+          </figure>
+          <div class="product-list__details">
+            <div class="uk-grid product-list-priceline">
+              <div class="uk-width-1-1 uk-width-1-2">
+                {{ p._source.name }}
+              </div>
+              <div class="product-list__price uk-width-1-1 uk-width-1-2">
+                $ {{ p._source.price }}
+              </div>
+            </div>
+            <div class="product-list__muted-text">
+              {{ p._source.sku }}
+            </div>
+            <a class="product-list__link" :href="p._source.url">Link to detail</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </product-list>
+</section>
+{% endraw %}

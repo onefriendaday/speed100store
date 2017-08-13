@@ -1,0 +1,65 @@
+<div>
+  <div v-if="itemCount > 0">
+    <h2 class="u__center u__mb">Cart</h2>
+    <table>
+      <thead>
+        <tr>
+          <th class="u__left">Product</th>
+          <th>&nbsp;</th>
+          <th class="u__hidden-small u__center">Price</th>
+          <th class="u__center">Quantity</th>
+          <th class="u__hidden-small u__center">Total</th>
+          <th class="u__hidden-small">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in checkout.order_items">
+          <td class="u__left">
+            <a :href="item.url" class="product-image">
+              <img :src="item.meta_data.image | resize('100x0')" :alt="item.sku">
+            </a>
+          </td>
+          <td class="product-details">
+            <h4>
+              <a :href="item.url">
+                {{ item.sku }} - {{ item.meta_data.name }}
+              </a>
+              <p class="u__visible-small">{{ item.value | currency }}</p>
+            </h4>
+          </td>
+          <td class="u__center u__hidden-small">{{ item.value | currency }}</td>
+          <td class="u__center">
+            <input type="number" @change="updateQuantity(item.id, $event)" class="cart__quantity u__center" :value="item.quantity">
+          </td>
+          <td class="u__center u__hidden-small">{{ item.value * item.quantity | currency }}</td>
+          <td class="u__center u__hidden-small product-quantity">
+            <a href="#" class="remove" @click.prevent="removeOrderItem(item.id)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86.5 86.5" class="cart__remove">
+                  <path d="M55.4 43.2L85.6 13c1.2-1.2 1.2-3 0-4.2L77.7.9c-1.2-1.2-3-1.2-4.2 0L43.2 31.1 13 .9C11.8-.3 10-.3 8.8.9l-8 7.9C-.4 10-.4 11.8.8 13L31 43.2.9 73.5c-1.2 1.2-1.2 3 0 4.2l7.9 7.9c1.2 1.2 3 1.2 4.2 0l30.2-30.2 30.2 30.2c1.2 1.2 3 1.2 4.2 0l7.9-7.9c1.2-1.2 1.2-3 0-4.2L55.4 43.2z"></path>
+              </svg>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="cart__totals">
+      <div class="cart__total">Subtotal {{ checkout.subtotal | currency }}</div>
+      <div class="cart__total" v-if="checkout.shipping > 0">Shipping {{ checkout.shipping | currency }}</div>
+      <div class="cart__total" v-if="checkout.order_tax > 0">Tax {{ checkout.tax | currency }}</div>
+      <div class="cart__total">Total {{ checkout.total | currency }}</div>
+    </div>
+
+    <div class="cart__actions">
+      <checkout></checkout>
+    </div>
+  </div>
+
+  <div v-if="checkoutStatus == 'complete'">
+    <h2 class="u__center u__mb">Thank you for buying on kriss.io</h2>
+  </div>
+
+  <div v-if="checkoutStatus == 'finalizing'">
+    <h2 class="u__center u__mb">Finalizing order...</h2>
+  </div>
+</div>

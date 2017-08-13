@@ -1,0 +1,66 @@
+import ajax from 'axios'
+let cache = {}
+
+export default {
+  computed: {
+    subnavVisible() {
+      return this.name == this.$parent.activeTab
+    }
+  },
+
+  data() {
+    return {
+      hoverTimeout: null
+    }
+  },
+
+  created() {
+    this.$on('tab-click', this.tabClick)
+  },
+
+  props: ['name'],
+
+  methods: {
+    doClick() {
+      this.$emit('tab-click', this.name)
+    },
+
+    tabClick(tab) {
+      clearTimeout(this.hoverTimeout)
+      let container = document.querySelector('.subnav__container')
+      container.removeEventListener('mouseleave', this.leave)
+
+      if (tab === '0') {
+        container.style.display = 'none'
+        container.innerHTML = ''
+      } else {
+        container.style.display = 'block'
+        container.innerHTML = ''
+        let path = '//' + window.location.host + '/_component/meganav?id=' + this.name
+
+        if (cache[path]) {
+          container.innerHTML = cache[path]
+        } else {
+          ajax.get(path)
+            .then(function (res) {
+              cache[path] = res.data
+              container.innerHTML = cache[path]
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        }
+
+        container.addEventListener('mouseleave', this.leave)
+      }
+    },
+
+    leave() {
+      this.hoverTimeout = setTimeout(() => {
+        if (this.subnavVisible) {
+          this.$emit('tab-click', '0')
+        }
+      }, 500)
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{{ blok._editable }}
+<div class="product-list">
+  <h4 class="u__center product-list__header">Feature products</h4>
+
+  <div class="uk-grid">
+    {% set products from stories starts_with:'products' %}
+    {% for product in products.data %}
+      <div class="uk-width-1-2@s uk-width-1-3@m">
+        <figure>
+          <a href="/{{ product.full_slug }}">
+            <img
+              data-sizes="auto"
+              data-src="{{ product.content.images[0].image | resize:'300x300' }}"
+              data-srcset="{{ product.content.images[0].image | resize:'300x300' }} 300w, {{ product.content.images[0].image | resize:'300x300' }} 600w"
+              class="product-list__img lazyload u__cany"
+              alt="" />
+            <canvas class="u__cany-can" style="background-image: url('{{ product.content.images[0].image | resize:'10x10' }}')" width="300" height="300"></canvas>
+          </a>
+        </figure>
+        <div class="product-list__details">
+          <div class="uk-grid product-list-priceline">
+            <div class="uk-width-1-1 uk-width-1-2">
+              {{ product.name }}
+            </div>
+            <div class="product-list__price uk-width-1-1 uk-width-1-2">
+              $ {{ product.content.price }}
+            </div>
+          </div>
+          <div class="product-list__muted-text">
+            {{ product.content.excerpt }}
+          </div>
+          <a class="product-list__link" href="/{{ product.full_slug }}">Link to detail</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

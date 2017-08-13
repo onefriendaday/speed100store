@@ -1,0 +1,54 @@
+{{ blok._editable }}
+<div class="product">
+  <nav class="product__breadcrumb" role="navigation" aria-label="breadcrumbs">
+    <ul class="breadcrumb">
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <span>{{ story.name }}</span>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="uk-grid uk-grid-large">
+    <div class="uk-width-1-2@m">
+      <div class="product__pics">
+        {% for blok in blok.images %}
+          {{ blok._editable }}
+          <img class="u__responsive-width" src="{{ blok.image }}" alt="{{ blok.alt_text }}">
+        {% endfor %}
+      </div>
+    </div>
+    <div class="uk-width-1-2@m">
+      <h1>{{ blok.name }}</h1>
+      <p class="u__muted u__text-medium">
+        <i>{{ blok.excerpt | newline_to_br }}</i>
+      </p>
+      <p class="product__price">
+        $ {{ blok.price }}
+      </p>
+      <div class="product__buy-form" data-vue="BuyButton">
+        <button :class="{'buy-btn--loading': loading}" class="button buy-btn" @click.prevent="addToCart('{{ blok.sku }}')">
+          <span class="buy-btn__loading">Adding...</span>
+          <span class="buy-btn__text">Add to cart</span>
+        </button>
+      </div>
+      <div class="product__description u__text-medium">
+        {{ blok.description | markdown }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="application/ld+json">
+{
+  "@type": "ProductInfo",
+  "@id": "{{ story.id }}",
+  "image": "{{ blok.images[0].image }}",
+  "name": "{{ story.name }}",
+  "sku": "{{ blok.sku }}",
+  "color": "{{ blok.color }}",
+  "price": {{ blok.price }}
+}
+</script>
