@@ -46,7 +46,7 @@
     <div class="cart__totals">
       <div class="cart__total">Subtotal {{ checkout.subtotal | currency }}</div>
       <div class="cart__total" v-if="checkout.shipping > 0">Shipping {{ checkout.shipping | currency }}</div>
-      <div class="cart__total" v-if="checkout.order_tax > 0">Tax {{ checkout.tax | currency }}</div>
+      <div class="cart__total" v-if="checkout.tax > 0">Tax {{ checkout.tax | currency }}</div>
       <div class="cart__total">Total {{ checkout.total | currency }}</div>
     </div>
 
