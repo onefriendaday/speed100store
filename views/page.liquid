@@ -130,13 +130,21 @@
 
   <aside class="mdc-temporary-drawer mdc-typography">
     <nav class="mdc-temporary-drawer__drawer">
-      <nav id="icon-with-text-demo" class="mdc-temporary-drawer__content mdc-list">
-        <a class="mdc-list-item mdc-temporary-drawer--selected" href="#">
-          <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">inbox</i>Inbox
-        </a>
-        <a class="mdc-list-item" href="#">
-          <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">star</i>Star
-        </a>
+      <nav class="mdc-temporary-drawer__content sidebar">
+        <ul class="u__unstyled-li">
+        {% for navitem in global.content.left_navi %}
+          <li>
+            <a class="sidebar__item" href="{{ navitem.link | url }}">{{ navitem.name }}</a>
+            {% if navitem.subnavi != blank %}
+              <ul class="sidebar__subitems u__unstyled-li">
+                {% for subnavitem in navitem.subnavi %}
+                  <li><a href="{{ subnavitem.link | url }}">{{ subnavitem.name }}</a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+        {% endfor %}
+        </ul>
       </nav>
     </nav>
   </aside>
@@ -144,7 +152,13 @@
   <script>
     var CheckoutToken = '{{ apps.commerce.token }}'
   </script>
-  <script src="{{ 'assets/js/scripts.js' | asset_url }}" async></script>
+
+  {% if proxy_mode %}
+    <script src="{{ 'assets/js/scripts.js' | asset_url }}" async></script>
+  {% else %}
+    <script src="{{ 'assets/js/scripts.min.js' | asset_url }}" async></script>
+  {% endif %}
+
   <script>
     /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
     !function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);

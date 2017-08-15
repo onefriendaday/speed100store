@@ -1,23 +1,14 @@
 {{ blok._editable }}
-<div class="teaser">
-  <section class="teaser__inner uk-grid">
-    <div class="teaser__img uk-width-1-2@s uk-width-2-3@m">
-      <a class="u__block" href="#">
-        <img
-          data-sizes="auto"
-          data-src="{{ blok.image | resize:'800x0' }}"
-          data-srcset="{{ blok.image | resize:'300x0' }} 300w, {{ blok.image | resize:'600x0' }} 600w"
-          class="product-list__img lazyload u__cany"
-          alt="" />
-        <canvas class="u__cany-can" style="background-image: url('{{ blok.image | resize:'10x0' }}')" width="{{ blok.image | original_width }}" height="{{ blok.image | original_height }}"></canvas>
-      </a>
+<div class="teaser" data-vue="Slider">
+  <div>
+    <section class="teaser__inner uk-grid">
+      {% include 'slide' with blok:blok.body[0] %}
+    </section>
+
+    <div class="pag">
+      {% for item in blok.body %}
+        <button class="pag__dot" :class="{'pag__dot--current': current == {{ forloop.index0 }}}" v-on:click="goTo({{ forloop.index0 }})"></button>
+      {% endfor %}
     </div>
-    <div class="teaser__text uk-width-1-2@s uk-width-1-3@m">
-      <h1>
-        <a href="#">Sizes Based On Body Types</a>
-      </h1>
-      <p>Sizes Based On Body Types</p>
-      <a class="teaser__link" href="#">Link</a>
-    </div>
-  </section>
+  </div>
 </div>

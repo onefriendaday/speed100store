@@ -1,20 +1,20 @@
 {{ blok._editable }}
 <div class="product-list">
-  <h4 class="u__center product-list__header">Feature products</h4>
+  <h3 class="u__center product-list__header">Featured products</h3>
 
   <div class="uk-grid">
     {% set products from stories starts_with:'products', per_page:'3' %}
     {% for product in products.data %}
       <div class="uk-width-1-2@s uk-width-1-3@m">
         <figure>
-          <a href="/{{ product.full_slug }}">
+          <a href="/{{ product.full_slug }}" class="u__ratio">
             <img
+              src="{{ product.content.images[0].image | resize:'10x10' }}"
               data-sizes="auto"
               data-src="{{ product.content.images[0].image | resize:'300x300' }}"
               data-srcset="{{ product.content.images[0].image | resize:'300x300' }} 300w, {{ product.content.images[0].image | resize:'300x300' }} 600w"
-              class="product-list__img lazyload u__cany"
+              class="product-list__img lazyload"
               alt="" />
-            <canvas class="u__cany-can" style="background-image: url('{{ product.content.images[0].image | resize:'10x10' }}')" width="300" height="300"></canvas>
           </a>
         </figure>
         <div class="product-list__details">
@@ -29,7 +29,7 @@
           <div class="product-list__muted-text">
             {{ product.content.excerpt }}
           </div>
-          <a class="product-list__link" href="/{{ product.full_slug }}">Link to detail</a>
+          <a class="product-list__link link" href="/{{ product.full_slug }}">Detail</a>
         </div>
       </div>
     {% endfor %}
