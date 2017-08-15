@@ -1,2 +1,7 @@
 {{ blok._editable }}
-<img class="u__responsive" src="{{ blok.image }}" alt="{{ blok.alt }}" />
+<a href="{{ blok.link | url }}" class="image">
+  {% if blok.overlay_text %}
+    <div class="image__overlay">{{ blok.overlay_text }}</div>
+  {% endif %}
+  <img class="u__responsive" src="{{ blok.image }}" alt="{{ blok.alt_text }}" />
+</a>

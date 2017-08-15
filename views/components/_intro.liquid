@@ -1,11 +1,10 @@
 {{ blok._editable }}
 <div class="intro">
-  <h1>Shirts</h1>
+  <h1>{{ blok.headline }}</h1>
   <h2>
-    You are not small, medium, or large.<br>
-You, sir, are a gentleman
+    {{ blok.sub_headline | newline_to_br }}
   </h2>
   <div>
-    Shop by collection...
+    {{ blok.caption }}
   </div>
 </div>

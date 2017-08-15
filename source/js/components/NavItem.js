@@ -25,6 +25,12 @@ export default {
       this.$emit('tab-click', this.name)
     },
 
+    enterEditmode() {
+      if (typeof window.storyblok != 'undefined') {
+        storyblok.enterEditmode()
+      }
+    },
+
     tabClick(tab) {
       clearTimeout(this.hoverTimeout)
       let container = document.querySelector('.subnav__container')
@@ -40,11 +46,13 @@ export default {
 
         if (cache[path]) {
           container.innerHTML = cache[path]
+          this.enterEditmode()
         } else {
           ajax.get(path)
             .then(function (res) {
               cache[path] = res.data
               container.innerHTML = cache[path]
+              this.enterEditmode()
             })
             .catch(function (error) {
               console.log(error)
