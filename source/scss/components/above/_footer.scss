@@ -1,5 +1,22 @@
 .footer {
+  ul {
+    @extend .u__unstyled-li;
+  }
+}
 
+.footer__icons {
+  li {
+    display: inline-block;
+    margin: 10px;
+  }
+}
+
+.footer__social-icon {
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .footer__wrap {

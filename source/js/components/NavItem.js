@@ -27,7 +27,11 @@ export default {
 
     enterEditmode() {
       if (typeof window.storyblok != 'undefined') {
-        storyblok.enterEditmode()
+        storyblok.pingEditor(function() {
+          if (storyblok.inEditor) {
+            storyblok.enterEditmode()
+          }
+        })
       }
     },
 
