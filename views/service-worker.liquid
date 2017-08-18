@@ -10,11 +10,11 @@
   // The route for any requests from the googleapis origin
   toolbox.router.get('/(.*)', global.toolbox.cacheFirst, {
     cache: {
-      name: 'googleapis',
+      name: 'gstatic',
       maxEntries: 10,
       maxAgeSeconds: 86400 // cache for a day
     },
-    origin: /\.googleapis\.com$/,
+    origin: /\.gstatic\.com$/,
     // Set a timeout threshold of 2 seconds
     networkTimeoutSeconds: 2
   });
