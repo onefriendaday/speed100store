@@ -23,7 +23,7 @@
         css.type = "text/css";
         css.innerHTML = sessionStorage.fonts;
         document.getElementsByTagName('head')[0].appendChild(css);
-        document.getElementsByTagName('html')[0].className += ' scrolled wf-active'
+        document.getElementsByTagName('html')[0].className += ' wf-active'
       }
     })();
   </script>
@@ -39,13 +39,6 @@
         <svg class="icon"><use xlink:href="#icon-navi"></use></svg>
       </a>
     </div>
-    <a href="/" class="header__col header__logo">
-      {% if global.content.logo_svg != blank %}
-        {{ global.content.logo_svg }}
-      {% else %}
-        <img width="100" src="{{ global.content.logo }}" />
-      {% endif %}
-    </a>
     <nav class="header__col u__hide--m" role="navigation" data-vue="Navigation">
       <ul class="nav">
         {% for navitem in global.content.left_navi %}
@@ -64,6 +57,13 @@
         {% endfor %}
       </ul>
     </nav>
+    <a href="/" class="header__col header__logo">
+      {% if global.content.logo_svg != blank %}
+        {{ global.content.logo_svg }}
+      {% else %}
+        <img width="100" src="{{ global.content.logo }}" />
+      {% endif %}
+    </a>
     <nav class="header__col header__second-navi u__hide--m">
       <ul class="nav">
         <li>
@@ -82,7 +82,22 @@
 
   <div data-vue="Errors"></div>
 
-  <div class="subnav__container"></div>
+  <div class="subnav__container">
+    {% for item in global.content.left_navi %}
+      <div data-subnav-index="{{ forloop.index0 }}" class="meganav">
+        {% if item.content_area != blank %}
+        <div class="uk-grid">
+          <div class="uk-width-1-2"></div>
+          <div class="uk-width-1-2">
+            {% for item in item.content_area %}
+              {% include item.component with blok: item %}
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
 
   <main id="main" role="main">
     {% include story.content.component with blok: story.content, title: story.name, date: story.created_at %}

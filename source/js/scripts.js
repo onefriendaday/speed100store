@@ -1,10 +1,18 @@
+import 'core-js/es6/promise'
+import 'core-js/fn/promise'
 import {MDCTemporaryDrawer} from '@material/drawer/dist/mdc.drawer'
 import ScrollListener from './components/ScrollListener'
+import TouchSlider from './components/TouchSlider'
 import Vue from 'vue'
 import Accounting from 'accounting'
 import LazySizes from 'lazysizes'
 
 ScrollListener.init()
+
+let sliders = document.querySelectorAll('.js_slider')
+for (var i = 0; i < sliders.length; i++) {
+  TouchSlider.init(sliders[i])
+}
 
 let drawer = null
 
@@ -21,7 +29,6 @@ import Catalogue from './components/Catalogue'
 import Checkout from './components/Checkout'
 import Minicart from './components/Minicart'
 import Cart from './components/Cart'
-import Slider from './components/Slider'
 import Errors from './components/Errors'
 import BuyButton from './components/BuyButton'
 
@@ -30,7 +37,6 @@ const vues = {
   Checkout,
   Minicart,
   Cart,
-  Slider,
   Errors,
   BuyButton,
   Catalogue
@@ -51,8 +57,5 @@ Vue.filter('currency', function(value) {
 let vueElements = document.querySelectorAll('[data-vue]')
 
 for (var i = 0; i < vueElements.length; i++) {
-  console.log(vues[vueElements[i].getAttribute('data-vue')])
   new Vue(vues[vueElements[i].getAttribute('data-vue')])
 }
-
-console.log('thsssis')

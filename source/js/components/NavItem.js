@@ -40,30 +40,17 @@ export default {
       let container = document.querySelector('.subnav__container')
       container.removeEventListener('mouseleave', this.leave)
 
+      for (let i = 0, len = container.children.length; i < len; i++) {
+        container.children[i].style.display = 'none'
+      }
+      container.children[tab].style.display = 'block'
+
       if (tab === '0') {
         container.style.display = 'none'
-        container.innerHTML = ''
       } else {
         container.style.display = 'block'
-        container.innerHTML = ''
-        let path = '//' + window.location.host + '/_component/meganav?id=' + this.name
-
-        if (cache[path]) {
-          container.innerHTML = cache[path]
-          this.enterEditmode()
-        } else {
-          ajax.get(path)
-            .then(function (res) {
-              cache[path] = res.data
-              container.innerHTML = cache[path]
-              this.enterEditmode()
-            })
-            .catch(function (error) {
-              console.log(error)
-            })
-        }
-
         container.addEventListener('mouseleave', this.leave)
+        this.enterEditmode()
       }
     },
 

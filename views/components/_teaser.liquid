@@ -1,14 +1,17 @@
 {{ blok._editable }}
-<div class="teaser" data-vue="Slider">
-  <div>
-    <section class="teaser__inner uk-grid">
-      {% include 'slide' with blok:blok.body[0] %}
-    </section>
-
-    <div class="pag">
-      {% for item in blok.body %}
-        <button class="pag__dot" :class="{'pag__dot--current': current == {{ forloop.index0 }}}" v-on:click="goTo({{ forloop.index0 }})"></button>
-      {% endfor %}
+<div class="teaser">
+  <div class="slider js_slider">
+    <div class="slider__frame js_frame">
+      <ul class="slider__slides js_slides">
+        {% for slide in blok.body %}
+          <li class="js_slide">
+            <section class="teaser__inner uk-grid">
+              {% include 'slide' with blok:slide %}
+            </section>
+          </li>
+        {% endfor %}
+      </ul>
     </div>
+    <div class="pag js_dots"></div>
   </div>
 </div>
