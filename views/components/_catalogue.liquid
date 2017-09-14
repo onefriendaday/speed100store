@@ -1,6 +1,6 @@
 {{ blok._editable }}
+<section class="catalogue" data-vue="Catalogue" data-search-id="{{apps.search.uid}}">
 {% raw %}
-<section class="catalogue" data-vue="Catalogue">
   <filter-bar :res="res" @filter-changed="doFilter" class="catalogue__filter" inline-template>
     <div>
       <h4>Filters</h4>
@@ -52,5 +52,5 @@
       </div>
     </div>
   </product-list>
-</section>
 {% endraw %}
+</section>
